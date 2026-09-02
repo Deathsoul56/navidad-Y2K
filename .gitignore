@@ -3,3 +3,4 @@ backend/dist/
 .aws-sam/
 samconfig.toml
 *.log
+referencias/
