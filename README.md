@@ -50,6 +50,19 @@ con cualquier servidor estático (ej. la extensión "Live Server" de VS Code) y 
 
 ### Publicar en GitHub Pages
 
+GitHub Pages solo permite elegir `/(root)` o `/docs` como carpeta fuente (no `frontend/`
+directamente), así que en la raíz del repo hay un `.nojekyll` (evita que GitHub procese el sitio
+con Jekyll y te muestre el README en vez del juego) y un `index.html` que redirige a
+`frontend/index.html`.
+
+1. Sube el repo a GitHub (debe ser público para usar Pages en el plan Free).
+2. En Settings → Pages, configura Source: `Deploy from a branch`, rama `main`, carpeta `/(root)`.
+3. El sitio queda en `https://tu-usuario.github.io/tu-repo/`.
+4. Asegúrate de haber corrido `npm run build` en `frontend/` antes de publicar, para que exista
+   `frontend/dist/main.js`.
+
+### Publicar en GitHub Pages
+
 1. Sube el repo a GitHub.
 2. En Settings → Pages, configura la fuente como la carpeta `frontend/` (rama `main`) — o copia
    el contenido de `frontend/` a una rama `gh-pages` / carpeta `/docs` según prefieras.
