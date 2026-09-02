@@ -1,0 +1,23 @@
+Juego del Prisionero edición Navidad 2026
+En qué consiste el siguiente juego
+Voy a repartir regalos, pero el sistema este año tendrá un componente de estrategia
+tendrán que mandar sus link de regalas, solo 1 link por persona
+Hay 2 montos máximos, uno en general y otro por persona. cuanto es ? es información clasificada
+si tu link pasa el monto por persona te tocara calcetín
+cual es el truco aqui, que el monto por persona es dinamico
+ejemplo
+debido gasta 100 pesos, 4 participantes piden un regalo de 10 pesos (osea un total de 40 pesos gastados), entonces un quinto participante podria pedir un un regalo de 60 pesos 
+si todos piden un regalo con un monto grande y decido comprarlos el prioridad sera por orden de llegada, los primeros links tendran mas posibilidad de ser elegidos 
+su unica pista es que este año estoy un poco mas genero y quizas regalos que el año pasado fueron calcetin este año si pueden ser factibles
+que comience el juego
+
+Reglas y Recomendaciones
+
+1 - NO HAY PREGUNTAS
+2 - Preguntas = Calcetín
+3 - Tienes 24 horas para mandar tu link (Fecha límite xxx)
+4 - 1 link no son 2 links
+5 - Más de 1 link = Calcetín
+6 - Esto es una tiranía, si tus comportamientos no son los adecuados tendrás calcetin
+ 
+

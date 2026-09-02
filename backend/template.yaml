@@ -1,0 +1,137 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Juego del Prisionero - Navidad 2026: API para recibir links de regalo + metadatos.
+
+# TODO: reemplazar con el origin real de GitHub Pages antes de deployar, ej:
+#   https://tu-usuario.github.io
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Default: "https://CAMBIAR-USUARIO.github.io"
+  BillingAlertEmail:
+    Type: String
+    Description: Correo que recibe la alerta SNS si el gasto etiquetado "navidad-gift-game" supera el presupuesto.
+  BudgetLimitUsd:
+    Type: String
+    Default: "1"
+    Description: Límite mensual en USD del budget filtrado por tag antes de avisar por SNS.
+
+Globals:
+  Function:
+    Timeout: 10
+    MemorySize: 128
+    Runtime: nodejs24.x
+
+Resources:
+  GiftSubmissionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: participant
+          AttributeType: S
+        - AttributeName: submittedAt
+          AttributeType: S
+      KeySchema:
+        - AttributeName: participant
+          KeyType: HASH
+        - AttributeName: submittedAt
+          KeyType: RANGE
+
+  GiftApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - content-type
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 5
+
+  SubmitFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "node22"
+        Sourcemap: false
+        EntryPoints:
+          - src/submit.ts
+    Properties:
+      CodeUri: ./
+      Handler: src/submit.handler
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref GiftSubmissionsTable
+          ALLOWED_ORIGIN: !Ref AllowedOrigin
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref GiftSubmissionsTable
+      Events:
+        Submit:
+          Type: HttpApi
+          Properties:
+            Path: /submit
+            Method: post
+            ApiId: !Ref GiftApi
+
+  CostAlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: navidad-gift-game-cost-alerts
+
+  CostAlertSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn: !Ref CostAlertTopic
+      Protocol: email
+      Endpoint: !Ref BillingAlertEmail
+
+  ProjectBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: navidad-gift-game-budget
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: !Ref BudgetLimitUsd
+          Unit: USD
+        CostFilters:
+          TagKeyValue:
+            - "user:Project$navidad-gift-game"
+      NotificationsWithSubscribers:
+        - Notification:
+            NotificationType: ACTUAL
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref CostAlertTopic
+        - Notification:
+            NotificationType: FORECASTED
+            ComparisonOperator: GREATER_THAN
+            Threshold: 100
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - SubscriptionType: SNS
+              Address: !Ref CostAlertTopic
+
+Outputs:
+  ApiUrl:
+    Description: URL a copiar en frontend/src/main.ts (API_URL)
+    Value: !Sub "https://${GiftApi}.execute-api.${AWS::Region}.amazonaws.com/submit"
+  TableName:
+    Description: Tabla DynamoDB donde quedan los envíos (revisar aquí manualmente)
+    Value: !Ref GiftSubmissionsTable
+  CostAlertTopicArn:
+    Description: Tema SNS que avisa por correo si se supera el presupuesto (recuerda confirmar la suscripción por email)
+    Value: !Ref CostAlertTopic

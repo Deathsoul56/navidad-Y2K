@@ -1,0 +1,232 @@
+:root {
+  color-scheme: light;
+  --accent: #b3282d;
+  --accent-dark: #2f6b3f;
+  --gold: #d4a72c;
+  --bg: #fdf6f0;
+  --text: #241a1a;
+  --sidebar-bg: #1f4d2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  background-color: #cfe8f7;
+  /* textura tipo "cielo nevado" al estilo geocities, hecha solo con CSS */
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.85) 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+/* --- Banner estilo "Baha Men official site" --- */
+.banner {
+  background: linear-gradient(135deg, var(--accent-dark), #143b1f 60%, var(--accent-dark));
+  border-bottom: 6px solid var(--gold);
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.bubble-title {
+  margin: 0;
+  font-family: "Comic Sans MS", "Comic Sans", cursive, sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: bold;
+  color: #ffe680;
+  letter-spacing: 1px;
+  /* efecto "letra burbuja 3D" con capas de sombra, sin necesitar imágenes */
+  text-shadow:
+    2px 2px 0 var(--accent),
+    -1px -1px 0 #7a1216,
+    3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+.bubble-title .year {
+  display: inline-block;
+  color: #fff;
+  text-shadow:
+    2px 2px 0 var(--accent-dark),
+    3px 3px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* --- Layout: sidebar tipo AOL + contenido --- */
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sidebar {
+  flex: 0 0 180px;
+  background: var(--sidebar-bg);
+  border-right: 4px solid var(--gold);
+  margin-top: 2rem;
+}
+
+.sidebar-item {
+  padding: 0.9rem 0.75rem;
+  color: #dfe9df;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: default;
+}
+
+.sidebar-item.active {
+  background: var(--accent);
+  color: #fff;
+  border-left: 5px solid var(--gold);
+  padding-left: calc(0.75rem - 5px);
+}
+
+.sidebar-item.locked {
+  color: rgba(223, 233, 223, 0.45);
+}
+
+.sidebar-item.clickable {
+  cursor: pointer;
+}
+
+.sidebar-item.clickable:hover,
+.sidebar-item.clickable:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-item.clickable::after {
+  content: " ↩";
+}
+
+.container {
+  flex: 1;
+  min-width: 0;
+  max-width: 640px;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.step {
+  background: #fff;
+  border: 1px solid #e5d9cf;
+  border-radius: 4px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.hidden {
+  display: none;
+}
+
+.participant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* --- Botones biselados estilo Windows 98 / botón clásico de los 2000s --- */
+.participant-btn,
+#accept-rules-btn,
+#link-form button {
+  cursor: pointer;
+  border: 3px outset var(--gold);
+  border-radius: 4px;
+  padding: 0.7rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(180deg, #4d8a5e, var(--accent-dark));
+  color: #fff;
+}
+
+.participant-btn:hover,
+#accept-rules-btn:hover,
+#link-form button:hover {
+  filter: brightness(1.08);
+}
+
+.participant-btn:active,
+#accept-rules-btn:active,
+#link-form button:active {
+  border-style: inset;
+  transform: translateY(1px);
+}
+
+.rules-content p,
+.rules-content li {
+  line-height: 1.5;
+}
+
+#link-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+#link-form input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 2px inset #ccc;
+  border-radius: 4px;
+}
+
+.status {
+  font-weight: 600;
+  min-height: 1.2em;
+}
+
+/* --- Footer con contador de visitas de mentira, como en los sitios viejos --- */
+.retro-footer {
+  text-align: center;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.visit-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: #444;
+}
+
+.counter-digits {
+  background: #111;
+  color: #2ee62e;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 0.2rem 0.5rem;
+  border: 2px inset #444;
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex: 1;
+    display: flex;
+    border-right: none;
+    border-bottom: 4px solid var(--gold);
+    margin-top: 0;
+  }
+
+  .sidebar-item {
+    flex: 1;
+    text-align: center;
+    border-bottom: none;
+  }
+
+  .sidebar-item.active {
+    border-left: none;
+    border-bottom: 5px solid var(--gold);
+    padding-left: 0.75rem;
+  }
+}

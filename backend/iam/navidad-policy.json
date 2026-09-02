@@ -1,0 +1,109 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CloudFormationFullAccess",
+      "Effect": "Allow",
+      "Action": "cloudformation:*",
+      "Resource": "arn:aws:cloudformation:*:381492157737:stack/navidad-gift-game*/*"
+    },
+    {
+      "Sid": "CloudFormationChangeSetHelpers",
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:ListStacks",
+        "cloudformation:ValidateTemplate",
+        "cloudformation:DescribeStackEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowServerlessTransform",
+      "Effect": "Allow",
+      "Action": "cloudformation:CreateChangeSet",
+      "Resource": "arn:aws:cloudformation:*:aws:transform/Serverless-2016-10-31"
+    },
+    {
+      "Sid": "LambdaScoped",
+      "Effect": "Allow",
+      "Action": "lambda:*",
+      "Resource": "arn:aws:lambda:*:381492157737:function:navidad-gift-game-*"
+    },
+    {
+      "Sid": "ApiGatewayFullAccess",
+      "Effect": "Allow",
+      "Action": "apigateway:*",
+      "Resource": "arn:aws:apigateway:*::/*"
+    },
+    {
+      "Sid": "DynamoDbScoped",
+      "Effect": "Allow",
+      "Action": "dynamodb:*",
+      "Resource": "arn:aws:dynamodb:*:381492157737:table/navidad-gift-game-*"
+    },
+    {
+      "Sid": "S3ArtifactsBucketOnly",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject",
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:GetBucketPolicy",
+        "s3:PutBucketPolicy",
+        "s3:GetEncryptionConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:s3:::navidad-gift-game-artifacts-381492157737",
+        "arn:aws:s3:::navidad-gift-game-artifacts-381492157737/*"
+      ]
+    },
+    {
+      "Sid": "CloudWatchLogsScoped",
+      "Effect": "Allow",
+      "Action": "logs:*",
+      "Resource": "arn:aws:logs:*:381492157737:log-group:/aws/lambda/navidad-gift-game-*"
+    },
+    {
+      "Sid": "SnsScoped",
+      "Effect": "Allow",
+      "Action": "sns:*",
+      "Resource": "arn:aws:sns:*:381492157737:navidad-gift-game-*"
+    },
+    {
+      "Sid": "BudgetsAccess",
+      "Effect": "Allow",
+      "Action": "budgets:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "IamRoleScopedForLambdaExecution",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreateRole",
+        "iam:DeleteRole",
+        "iam:GetRole",
+        "iam:PutRolePolicy",
+        "iam:DeleteRolePolicy",
+        "iam:GetRolePolicy",
+        "iam:AttachRolePolicy",
+        "iam:DetachRolePolicy",
+        "iam:ListRolePolicies",
+        "iam:ListAttachedRolePolicies",
+        "iam:TagRole",
+        "iam:PassRole"
+      ],
+      "Resource": "arn:aws:iam::381492157737:role/navidad-gift-game-*"
+    },
+    {
+      "Sid": "CloudFormationBootstrapDescribe",
+      "Effect": "Allow",
+      "Action": [
+        "cloudformation:DescribeStacks",
+        "cloudformation:GetTemplateSummary"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego del Prisionero - Navidad 2026</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="banner">
+    <h1 class="bubble-title">🎄 Juego del Prisionero <span class="year">Navidad 2026</span></h1>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="Progreso del juego">
+      <div class="sidebar-item" id="sidebar-step-participant" role="button" data-step="participant">
+        1. Elige tu nombre
+      </div>
+      <div class="sidebar-item" id="sidebar-step-rules" role="button" data-step="rules">
+        2. Lee las reglas
+      </div>
+      <div class="sidebar-item" id="sidebar-step-form" role="button" data-step="form">
+        3. Envía tu link
+      </div>
+    </aside>
+
+    <main class="container">
+      <section id="step-participant" class="step">
+        <h2>¿Quién eres?</h2>
+        <div id="participant-list" class="participant-list"></div>
+      </section>
+
+      <section id="step-rules" class="step hidden">
+        <h2>Descripción y reglas del juego</h2>
+        <div id="rules-content" class="rules-content"></div>
+        <button id="accept-rules-btn" type="button">Entendido, quiero mandar mi link</button>
+      </section>
+
+      <section id="step-form" class="step hidden">
+        <h2>Envía tu link de regalo</h2>
+        <p>Participante: <strong id="selected-participant-label"></strong></p>
+        <form id="link-form">
+          <label for="link-input">Link del regalo</label>
+          <input type="url" id="link-input" name="link" placeholder="https://..." required />
+          <button type="submit">Enviar link</button>
+        </form>
+        <p id="form-status" class="status" role="status"></p>
+      </section>
+    </main>
+  </div>
+
+  <footer class="retro-footer">
+    <div class="visit-counter">
+      <span class="counter-label">🎅 Visitas a esta página (nadie te cree, pero ahí está):</span>
+      <span id="visit-counter" class="counter-digits">000000</span>
+    </div>
+  </footer>
+
+  <script type="module" src="dist/main.js"></script>
+</body>
+</html>

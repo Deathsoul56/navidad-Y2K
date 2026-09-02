@@ -1,0 +1,12 @@
+{
+  "name": "gift-game-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  }
+}
